@@ -4,11 +4,12 @@
 
 [![Analytics](https://ga-beacon.appspot.com/UA-133466903-1/github/budtmo/docker-android/README.md)](https://github.com/igrigorik/ga-beacon "Analytics")
 [![Join the chat at https://gitter.im/budtmo/docker-android](https://badges.gitter.im/budtmo/docker-android.svg)](https://gitter.im/budtmo/docker-android?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/budtmo/docker-android.svg?branch=master)](https://travis-ci.org/budtmo/docker-android)
+[![Build Status](https://dev.azure.com/budtmoos/budtmoos/_apis/build/status/budtmo.docker-android.test?branchName=master)](https://dev.azure.com/budtmoos/budtmoos/_build/latest?definitionId=7&branchName=master)
 [![codecov](https://codecov.io/gh/budtmo/docker-android/branch/master/graph/badge.svg)](https://codecov.io/gh/budtmo/docker-android)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3f000ffb97db45a59161814e1434c429)](https://www.codacy.com/app/butomo1989/docker-appium?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=butomo1989/docker-appium&amp;utm_campaign=Badge_Grade)
 [![GitHub release](https://img.shields.io/github/release/budtmo/docker-android.svg)](https://github.com/budtmo/docker-android/releases)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbudtmo%2Fdocker-android.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbudtmo%2Fdocker-android?ref=badge_shield)
+[![Paypal Donate](https://img.shields.io/badge/paypal-donate-blue.svg)](http://paypal.me/budtmo)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Docker-Android is a docker image built to be used for everything related to mobile website testing and Android project.
@@ -53,6 +54,7 @@ List of Docker images
 |Linux|9.0|28|chrome|66.0|2.40|budtmo/docker-android-x86-9.0|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-x86-9.0.svg)](https://microbadger.com/images/budtmo/docker-android-x86-9.0 "Get your own image badge on microbadger.com")|
 |Linux|10.0|29|chrome|74.0|74.0.3729.6|budtmo/docker-android-x86-10.0|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-x86-10.0.svg)](https://microbadger.com/images/budtmo/docker-android-x86-10.0 "Get your own image badge on microbadger.com")|
 |Linux|11.0|30|chrome|83.0|83.0.4103.39|budtmo/docker-android-x86-11.0|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-x86-11.0.svg)](https://microbadger.com/images/budtmo/docker-android-x86-11.0 "Get your own image badge on microbadger.com")|
+|Linux|12.0|31|chrome|93.0|93.0.4577.15|budtmo/docker-android-x86-12.0|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-x86-12.0.svg)](https://microbadger.com/images/budtmo/docker-android-x86-12.0 "Get your own image badge on microbadger.com")|
 |All |-|-|-|-|-|budtmo/docker-android-real-device|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-real-device.svg)](https://microbadger.com/images/budtmo/docker-android-real-device "Get your own image badge on microbadger.com")|
 |All|All|All|All|All|All|budtmo/docker-android-genymotion|[![](https://images.microbadger.com/badges/image/budtmo/docker-android-genymotion.svg)](https://microbadger.com/images/budtmo/docker-android-genymotion "Get your own image badge on microbadger.com")|
 
@@ -81,7 +83,14 @@ Docker is installed in your system.
 Quick Start
 -----------
 
-1. Run Docker-Android
+1. Your machine need to support virtualization. To check it:
+
+	```
+	sudo apt install cpu-checker
+	kvm-ok
+	```
+
+2. Run Docker-Android
 
 	- For ***Linux OS***, please use image name that contains "x86"
 
@@ -92,7 +101,7 @@ Quick Start
 	- For ***OSX*** and ***Windows OS***, please use Virtual Machine that support Virtualization with Ubuntu OS
 
 
-2. Verify the ip address of docker host.
+3. Verify the ip address of docker host.
 
    - For OSX, you can find out by using following command:
 
@@ -102,12 +111,12 @@ Quick Start
 
    - For different OS, localhost should work.
 
-3. Open ***http://docker-host-ip-address:6080*** from web browser. Note: Adding ```?view_only=true``` will give user only view only permission.
+4. Open ***http://docker-host-ip-address:6080*** from web browser. Note: Adding ```?view_only=true``` will give user only view only permission.
 
 Custom configurations
 ---------------------
 
-[This document](README_CUSTOM_CONFIG.md) contains custom configurations of Docker-Android that you might need, e.g. Proxy, Changing language on fly, etc. 
+[This document](README_CUSTOM_CONFIG.md) contains custom configurations of Docker-Android that you might need, e.g. Proxy, Changing language on fly, etc.
 
 Build Android project
 ---------------------
@@ -125,31 +134,31 @@ Docker-Android can be used for building Android project and executing its unit t
     ```bash
     docker run -it --rm -v $PWD/testing-samples/ui/espresso/BasicSample:/tmp -w /tmp budtmo/docker-android-x86-8.1 /tmp/gradlew build
     ```
-    
+
 Control Android connected to host (Emulator or Real Device)
 -----------------------------------------------------------
-1. Create a docker container with this command 
+1. Create a docker container with this command
 
 	```
 	$ docker run --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 --name android-container-appium budtmo/docker-android-real-device
 	```
-	
+
 2. Open noVNC [http://localhost:6080](http://localhost:6080)
 
 3. Open terminal by clicking right on **noVNC** window >> **Terminal emulator**
 
-4. To connect to host's adb (make sure your host have adb and connected to the device.) 
+4. To connect to host's adb (make sure your host have adb and connected to the device.)
 
 	```
 	$ adb -H host.docker.internal devices
 	```
-	
+
 	To specify port, just add `-P port_number`
 
 	```
 	$ adb -H host.docker.internal -P 5037 devices
 	```
-	
+
 5. Now your container can access your host devices. But, you need to add `remoteAdbHost` and `adbPort` desired capabilities to make **Appium** can recognise those devices.  
 
 
